@@ -28,7 +28,7 @@ body {
 }
 
 .container {
-  min-width: 500px;
+  width: 500px;
   height: fit-content;
   background: #fff;
   padding: 20px;
@@ -106,4 +106,18 @@ ul {
 .remove {
   cursor: pointer;
   width: 30px;
+}
+
+@media screen and (width <= 426px) {
+  .container {
+    margin: 10px 10px;
+  }
+
+  input {
+    width: 60%;
+  }
+
+  input[type=button] {
+    width: 40%;
+  }
 }
