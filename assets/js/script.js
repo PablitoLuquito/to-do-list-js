@@ -1,7 +1,85 @@
 function toDoList() {
-  $(function() {
-    $("#sortable-list").sortable();
-  });
+  const input = document.querySelector('.input');
+  const add = document.querySelector('.add');
+  const list = document.querySelector('.to-do');
+
+  function createLiTag() {
+    const li = document.createElement('li');
+    li.classList.add('list-item');
+    return li;
+  }
+
+  function emptyInput() {
+    input.value = '';
+    input.focus();
+  }
+
+  function createRemoveButton(li) {
+    const removeButton = document.createElement('img');
+    removeButton.setAttribute('src', './assets/img/remove.svg');
+    removeButton.setAttribute('alt', 'Click to remove item');
+    removeButton.setAttribute('title', 'Click to remove item');
+    removeButton.classList.add('remove');
+    li.appendChild(removeButton);
+  }
+
+  function createListItem(input) {
+    const li = createLiTag();
+    li.innerText = input.trim();
+    list.appendChild(li);
+    createRemoveButton(li);
+    emptyInput();
+    saveToDo();
+  }
+
+  input.addEventListener('keypress', function(event) {
+    if (event.key === 'Enter') {
+      if (!input.value) return;
+      createListItem(input.value);
+    }
+  })
+
+  add.addEventListener('click', function() {
+    if (!input.value) return;
+    createListItem(input.value);
+  })
+
+  document.addEventListener('click', (event) => {
+    const element = event.target;
+    if (element.classList.contains('remove')) {
+      element.parentElement.remove();
+      saveToDo();
+    }
+  })
+
+  function saveToDo() {
+    const listItems = document.querySelectorAll('.list-item');
+    const arrayListItems = [];
+
+    for (let item of listItems) {
+      let listItemText = item.innerText;
+      arrayListItems.push(listItemText);
+    }
+
+    const listItemsJSON = JSON.stringify(arrayListItems);
+    localStorage.setItem('listItems', listItemsJSON);
+  }
+
+  function addSavedList() {
+    const listItems = localStorage.getItem('listItems');
+    const arrayListItems = JSON.parse(listItems);
+
+    for (let item of arrayListItems) {
+      createListItem(item);
+    }
+  }
+
+  addSavedList();
+};
+
+toDoList();
+
+/*function toDoList() {
   
   const input = document.querySelector('.input');
   const list = document.getElementById('sortable-list');
@@ -23,7 +101,7 @@ function toDoList() {
   
   input.addEventListener('keypress', (event) => {
     if (event.key === 'Enter') {
-      createListItem(input.value);
+      createListItem(input.value.trim());
       return input.value = '';
     };
   });
@@ -94,7 +172,7 @@ function toDoList() {
       setTimeout(function() {
         item.classList.add('show');
       }, 10);
-    };
-  };
-};
-toDoList();
+    }
+  }
+}
+toDoList();*/
