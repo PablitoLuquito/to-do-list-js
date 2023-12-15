@@ -36,12 +36,22 @@ function toDoList() {
     if (event.key === 'Enter') {
       if (!input.value) return;
       createListItem(input.value);
+      const showList = document.querySelectorAll('.list-item');
+      console.log(showList);
+      for (let i = 0; i < showList.length; i++) {
+        showList[i].classList.add('show');
+      }
     }
   })
 
   add.addEventListener('click', function() {
     if (!input.value) return;
     createListItem(input.value);
+    const showList = document.querySelectorAll('.list-item');
+    console.log(showList);
+    for (let i = 0; i < showList.length; i++) {
+      showList[i].classList.add('show');
+    }
   })
 
   document.addEventListener('click', (event) => {
@@ -71,9 +81,13 @@ function toDoList() {
 
     for (let item of arrayListItems) {
       createListItem(item);
+      const showList = document.querySelectorAll('.list-item');
+      console.log(showList);
+      for (let i = 0; i < showList.length; i++) {
+        showList[i].classList.add('show');
+    }
     }
   }
-
   addSavedList();
 };
 
